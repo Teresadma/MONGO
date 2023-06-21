@@ -21,7 +21,7 @@ function uploadPhoto (usuario, url, titulo, descripcion) {
             console.log(err)
         });
 }
-// uploadPhoto("Pepe","/assets/img/perrito.png","perrito bonito","perrito muy muy bonito")
+// uploadPhoto("Jose","/assets/img/perrito.png","perro","gatito")
 
 function findPhotosUser(usuario){
     Photo.find({usuario: usuario})
@@ -35,7 +35,7 @@ function findPhotosUser(usuario){
     });
 }
 
-// findPhotosUser("Pepe")
+// findPhotosUser("Jose")
 
 function updatePhoto(titulo, descripcion, nuevaDescripcion){
     Photo.updateOne({descripcion: nuevaDescripcion})
@@ -48,7 +48,7 @@ function updatePhoto(titulo, descripcion, nuevaDescripcion){
             console.log("Fallo en la edición", err)
         });
 }
-// updatePhoto("perrito bonito","perrito muy muy bonito","perrito blanquito muy bonito")
+// updatePhoto("perro","gatito","perrito blanquito")
 
 function deletePhoto(usuario,titulo){
     Photo.deleteOne({usuario: usuario, titulo:titulo})
@@ -61,7 +61,7 @@ function deletePhoto(usuario,titulo){
             console.log("Foto no encontrada: ", err)
         });
 }
-// deletePhoto("Pepe","perrito bonito")
+// deletePhoto("Jose","gato")
 
 function deleteAll(usuario){
     Photo.deleteMany({usuario:usuario})
@@ -74,4 +74,4 @@ function deleteAll(usuario){
             console.log("Fotos no encontradas", err)
         });
 }
-deleteAll("Pepe")
+deleteAll("Jose")

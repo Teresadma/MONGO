@@ -32,27 +32,27 @@ let MarkModel = mongoose.model("Notas", marksSchema);
 let SubjectModel = mongoose.model("Asignatura", subjectSchema)
 let TeacherModel = mongoose.model("Profesor", teacherSchema);
 
-// let teacher1 = new TeacherModel({firstName: "Pepe", lastaName: "Jiménez", groups: ["1A","1B","1C"]})
-// let teacher2 = new TeacherModel({firstName: "Mayte", lastaName: "Albertí", groups: ["2A","2B","2C"]})
-// let teacher3 = new TeacherModel({firstName: "Lucia", lastaName: "López", groups: ["3A","3B","3C"]})
-// let teacher4 = new TeacherModel({firstName: "Nano", lastaName: "Casellas", groups: ["4A","4B","4C"]})
+let teacher1 = new TeacherModel({firstName: "Pepe", lastaName: "Jiménez", groups: ["1A","1B","1C"]})
+let teacher2 = new TeacherModel({firstName: "Mayte", lastaName: "Albertí", groups: ["2A","2B","2C"]})
+let teacher3 = new TeacherModel({firstName: "Lucia", lastaName: "López", groups: ["3A","3B","3C"]})
+let teacher4 = new TeacherModel({firstName: "Nano", lastaName: "Casellas", groups: ["4A","4B","4C"]})
 
-// let subject1 = new SubjectModel({title: "Castellano", teacher: [teacher1, teacher2]})
-// let subject2 = new SubjectModel({title: "Biología", teacher: [teacher2, teacher3]})
-// let subject3 = new SubjectModel({title: "Física", teacher: [teacher3, teacher4]})
-// let subject4 = new SubjectModel({title: "Química", teacher: [teacher1]})
-// let subject5 = new SubjectModel({title: "Matemáticas", teacher: [teacher4]})
+let subject1 = new SubjectModel({title: "Castellano", teacher: [teacher1, teacher2]})
+let subject2 = new SubjectModel({title: "Biología", teacher: [teacher2, teacher3]})
+let subject3 = new SubjectModel({title: "Física", teacher: [teacher3, teacher4]})
+let subject4 = new SubjectModel({title: "Química", teacher: [teacher1]})
+let subject5 = new SubjectModel({title: "Matemáticas", teacher: [teacher4]})
 
-// let notas1 = new MarkModel({date: '2022-06-23', mark: 8, subject: subject1})
-// let notas2 = new MarkModel({date: '2022-06-23', mark: 6, subject: subject2})
-// let notas3 = new MarkModel({date: '2022-06-23', mark: 3, subject: subject3})
-// let notas4 = new MarkModel({date: '2022-06-23', mark: 9, subject: subject4})
-// let notas5 = new MarkModel({date: '2022-06-23', mark: 5, subject: subject5})
+let notas1 = new MarkModel({date: '2022-06-23', mark: 8, subject: subject1})
+let notas2 = new MarkModel({date: '2022-06-23', mark: 6, subject: subject2})
+let notas3 = new MarkModel({date: '2022-06-23', mark: 3, subject: subject3})
+let notas4 = new MarkModel({date: '2022-06-23', mark: 9, subject: subject4})
+let notas5 = new MarkModel({date: '2022-06-23', mark: 5, subject: subject5})
 
-// let estudiante1 = new StudentModel({firstName: "Elena", lastName: "Gayo", marks: [notas1, notas2]})
-// let estudiante2 = new StudentModel({firstName: "Sofia", lastName: "Angel", marks: [notas3]})
-// let estudiante3 = new StudentModel({firstName: "Clara", lastName: "Montoro", marks: [notas4]})
-// let estudiante4 = new StudentModel({firstName: "Teresa", lastName: "de Miguel", marks: [notas5]})
+let estudiante1 = new StudentModel({firstName: "Elena", lastName: "Gayo", marks: [notas1, notas2]})
+let estudiante2 = new StudentModel({firstName: "Sofia", lastName: "Angel", marks: [notas3]})
+let estudiante3 = new StudentModel({firstName: "Clara", lastName: "Montoro", marks: [notas4]})
+let estudiante4 = new StudentModel({firstName: "Teresa", lastName: "de Miguel", marks: [notas5]})
 
 // estudiante1.save()
 // .then((result)=>{
@@ -128,12 +128,11 @@ let TeacherModel = mongoose.model("Profesor", teacherSchema);
 // })
 async function getMarks(fisrtName, lastName) {
     try {
+        let notas =[];
         let estudiante = await StudentModel.findOne({ firstName: fisrtName, lastName: lastName });
-        estudiante.marks.map((nota) => {
-            return {
-                date: nota.date,
-                mark: nota.mark
-            };
+        estudiante.marks.forEach((nota) => {
+            console.log(`Notas: ${nota.mark}`)
+            return notas            
         });
     } catch (error) {
         console.log(error);
@@ -141,12 +140,7 @@ async function getMarks(fisrtName, lastName) {
 }
 
 getMarks("Elena","Gayo")
-.then((marks) => {
-    console.log('Notas:', marks);
-})
-.catch((error) => {
-    console.log(error);
-});
+
 
 async function getSubjects(fisrtName, lastName) {
     try {

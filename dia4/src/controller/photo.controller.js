@@ -56,7 +56,7 @@ function postPhoto (request, response){
 
 function putPhoto (request,response){
     let respuesta;
-    Photo.updateOne({titulo: request.body.titulo},{descripcion: request.body.nuevaDescripcion})
+    Photo.findOneAndUpdate({titulo: request.body.titulo},{descripcion: request.body.descripcion})
         .then((data) =>
         {
             console.log("Descripcion editada: ", data);

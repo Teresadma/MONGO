@@ -116,139 +116,172 @@ let MarksModel = mongoose.model("Notas", marksSchema);
 //     console.log(error)
 // })
 
-// function getAVG(asignatura) {
-//     try {
-//         MarksModel.aggregate([{$group: {"_id": asignatura, "Nota Media": {"$avg": "$mark"}}}])
-//         .then((result)=>{
-//             console.log(result)
-//         })
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+function getAVG(asignatura) {
+    try {
+        MarksModel.aggregate([{$group: {"_id": asignatura, "Nota Media": {"$avg": "$mark"}}}])
+        .then((result)=>{
+            console.log(result)
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // getAVG("Castellano")
 
-// function getSUM() {
-//     try {
-//         MarksModel.aggregate([{$count:"Numero de Alumnos"}])
-//         .then((result)=>{
-//             console.log(result)
-//         })
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+function getSUM() {
+    try {
+        MarksModel.aggregate([{$count:"Numero de Alumnos"}])
+        .then((result)=>{
+            console.log(result)
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // getSUM()
 
-// function getNameSurname(){
-//     MarksModel.aggregate([{$project: {    
-//                                     _id: 0,
-//                                     student_first_name: 1,
-//                                     student_last_name: 1,
-//                                     }
-//                         }])
-//     .then((result)=>{
-//         console.log(result)
-//     })
-//     .catch ((error) => {
-//         console.log(error)})
+function getNameSurname(){
+    MarksModel.aggregate([{$project: {    
+                                    _id: 0,
+                                    student_first_name: 1,
+                                    student_last_name: 1,
+                                    }
+                        }])
+    .then((result)=>{
+        console.log(result)
+    })
+    .catch ((error) => {
+        console.log(error)})
     
-// }
+}
 
 
 // getNameSurname()
 
-// function getTeachers(){
-//     TeacherModel.aggregate([{$project: {    
-//                                     _id: 0,
-//                                     teacher_first_name: 1,
-//                                     teacher_last_name:1
-//                                     }
-//                         }])
-//     .then((result)=>{
-//         console.log(result)
-//     })
-//     .catch ((error) => {
-//         console.log(error)})
+function getTeachers(){
+    TeacherModel.aggregate([{$project: {    
+                                    _id: 0,
+                                    teacher_first_name: 1,
+                                    teacher_last_name:1
+                                    }
+                        }])
+    .then((result)=>{
+        console.log(result)
+    })
+    .catch ((error) => {
+        console.log(error)})
     
-// }
-
+}
 
 // getTeachers()
 
-// function getAlumnos (){
-//     MarksModel.aggregate([{"$group": {"_id": "$group_name", "Cantidad": {"$sum": 1}}
-//                         },
-//                         {"$sort": {"_id": -1}}])
-//     .then((result)=>{
-//                 console.log(result)
-//             })
-//     .catch ((error) => {
-//         console.log(error)})
-// }
+function getAlumnos (){
+    MarksModel.aggregate([{"$group": {"_id": "$group_name", "Cantidad": {"$sum": 1}}
+                        },
+                        {"$sort": {"_id": -1}}])
+    .then((result)=>{
+                console.log(result)
+            })
+    .catch ((error) => {
+        console.log(error)})
+}
 
 // getAlumnos()
 
-// function getMedia (){
-//     MarksModel.aggregate([{$group: {_id: "$subject_name", "Nota Media": {$avg: "$mark"}}},
-//                                     {$match: {"Nota Media": {$gte: 7.5}}},
-//                                     {$sort: {"Nota Media": -1}},
-//                                     {$limit: 5}
-//                                 ])
-//     .then((result)=>{
-//         console.log(result)
-//     })
-//     .catch ((error) => {
-//         console.log(error)})
-// }
+function getMedia (){
+    MarksModel.aggregate([{$group: {_id: "$subject_name", "Nota Media": {$avg: "$mark"}}},
+                                    {$match: {"Nota Media": {$gte: 7.5}}},
+                                    {$sort: {"Nota Media": -1}},
+                                    {$limit: 5}
+                                ])
+    .then((result)=>{
+        console.log(result)
+    })
+    .catch ((error) => {
+        console.log(error)})
+}
 
 // getMedia()
+console.log("Holi")
 
-// function getProfesores (){
-//     MarksModel.aggregate([{$unwind: "$teachers"},
-//                         {$group: {_id: "$subject_name", "Asignaturas": {$sum: 1}}
-//                         }])
-//     .then((result)=>{
-//                 console.log(result)
-//             })
-//     .catch ((error) => {
-//         console.log(error)})
-// }
+function getProfesores() {
+    MarksModel.aggregate([
+      { $unwind: "$teachers" },
+      {
+        $group: {
+          _id: "$subject_name",
+          count: { $sum: 1 }
+        }
+      }
+    ])
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  
+//   getProfesores();
+  
 
-// getProfesores()
+function getName() {
+    let lastYear = new Date().getFullYear() - 1;
 
-// function getCurrentYear(){
-//     let inicio = new Date('2023-01-01');
-//     let fin = new Date('2023-12-31');
-//     MarksModel.aggregate([{
-//         $match: {date: { $gte: inicio, $lte: fin }}},
-//                 {$group: {_id: "$subject_name", "La nota media es": { $avg: "$mark" }}}])
-//     .then((result)=>{
-//         console.log(result)
-//     })
-//     .catch ((error) => {
-//         console.log(error)})
-// }
-// getCurrentYear()
+        MarksModel.aggregate([{
+                                $project: {
+                                _id: 0,
+                                student_first_name: 1,
+                                student_last_name: 1,
+                                mark: 1,
+                                date: 1}},
+            {$match: {$or: [{ mark: { $gt: 8 }},
+                            { date: { $lt: new Date(lastYear, 0, 1)}}]}}
+                            ])
+    .then((result) => {
+    console.log(result);
+    })
+    .catch((err) => {
+    console.error("Error al obtener los alumnos", err);
+    });
+    }
 
-// function getCurrentStudent(){
-//     let inicio = new Date('2023-01-01');
-//     let fin = new Date('2023-12-31');
-//     MarksModel.aggregate([{
-//         $match: {date: { $gte: inicio, $lte: fin }}},
-//                 {$group: {_id: "$student_first_name", "La nota media es": { $avg: "$mark" }}}])
-    // .then((result)=>{
-    //     console.log(result)
-    // })
-    // .catch ((error) => {
-    //     console.log(error)})
-// }
-// // getCurrentStudent()
+// getName();
+
+function getCurrentYear(){
+    let inicio = new Date('2023-01-01');
+    let fin = new Date('2023-12-31');
+    MarksModel.aggregate([{
+        $match: {date: { $gte: inicio, $lte: fin }}},
+                {$group: {_id: "$subject_name", "La nota media es": { $avg: "$mark" }}}])
+    .then((result)=>{
+        console.log(result)
+    })
+    .catch ((error) => {
+        console.log(error)})
+}
+getCurrentYear()
+
+function getCurrentStudent(){
+    let inicio = new Date('2023-01-01');
+    let fin = new Date('2023-12-31');
+    MarksModel.aggregate([{
+        $match: {date: { $gte: inicio, $lte: fin }}},
+                {$group: {_id: "$student_first_name", "La nota media es": { $avg: "$mark" }}}])
+    .then((result)=>{
+        console.log(result)
+    })
+    .catch ((error) => {
+        console.log(error)})
+}
+// getCurrentStudent()
 
 function getStudentSubject(profesor){
-    MarksModel.aggregate([{$match: {"teachers.teacher_first_name": profesor}},
+    MarksModel.aggregate([
+                        {$unwind: "$teachers"},
+                        {$match: {"teachers.teacher_first_name": profesor}},
                         {$group: {
                             _id: "$student_first_name",
                             CantidadSubjects: { $sum: 1 },
@@ -264,6 +297,6 @@ function getStudentSubject(profesor){
     .catch ((error) => {
         console.log(error)})                
 }
-getStudentSubject("Elena")
+// getStudentSubject("Elena")
 
 

@@ -24,7 +24,7 @@ function uploadStudent (firstName, lastName, marks) {
             console.log(err)
         });
 }
-uploadStudent("Roberto","Gayo")
+uploadStudent("Elena","Gayo")
 
 function uploadMarks (date, mark, subject) {
     let nota = new Mark ({
@@ -61,7 +61,7 @@ function uploadSubject (title, teachers) {
         });
 }
 
-uploadSubject("Física")
+// uploadSubject("Física")
 
 function uploadTeacher (firstName, lastName, groups) {
     let profesor = new Teacher ({
@@ -80,7 +80,7 @@ function uploadTeacher (firstName, lastName, groups) {
         });
 }
 
-uploadTeacher("Sofia", "Ángel", ["2C","3C"])
+// uploadTeacher("Sofia", "Ángel", ["2C","3C"])
 
 // getStudentMarks(firstName, lastName) {
 //     Student.findOne({firstName: firstName, lastName: lastName})
@@ -115,5 +115,4 @@ uploadTeacher("Sofia", "Ángel", ["2C","3C"])
 //       });
 //   }
   
-  // Llama a la función pasando el nombre y apellido del estudiante
 //   getStudentMarks('Roberto','Gayo');
